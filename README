@@ -1,0 +1,20 @@
+Keystone Init Scripts
+=====================
+
+These scripts allow to init keystone database and migrate
+users/project/roles from nova to keystone database.
+
+To setup keystone database, run::
+
+    # sudo -u keystone ./init-keystone-db.py nova=127.0.0.1 glance=127.0.0.1 identity=127.0.0.1 magic=999888777666
+
+Substitute appropriate hosts for nova, glance, and identity (i.e. keystone) services.
+``magic`` is admin's magic token that is still saved in numerous places at OpenStack.
+Usually, magic token is 999888777666.
+
+This script will add default tenant, user, roles, services, and endpoint templates.
+
+To migrate from nova database, check your nova.conf for an adequate --sql_connection and run as root::
+
+    # ./nova2keystone.py
+    # chown -Rv keystone /var/*/keystone
